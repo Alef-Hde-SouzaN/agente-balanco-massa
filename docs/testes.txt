@@ -1,0 +1,15 @@
+test_encerrada_anterior (test_balanco.BalancoTests.test_encerrada_anterior) ... ok
+test_estorno_excessivo (test_balanco.BalancoTests.test_estorno_excessivo) ... ok
+test_estornos_conversao (test_balanco.BalancoTests.test_estornos_conversao) ... ok
+test_excesso_multiplas_ordens_sem_mutacao (test_balanco.BalancoTests.test_excesso_multiplas_ordens_sem_mutacao) ... ok
+test_falta_parcial_material (test_balanco.BalancoTests.test_falta_parcial_material) ... ok
+test_inexistente (test_balanco.BalancoTests.test_inexistente) ... ok
+test_limites_inclusivos (test_balanco.BalancoTests.test_limites_inclusivos) ... ok
+test_reabertura_vigente (test_balanco.BalancoTests.test_reabertura_vigente) ... ok
+test_seed_idempotente (test_balanco.BalancoTests.test_seed_idempotente) ... ok
+test_zero_producao (test_balanco.BalancoTests.test_zero_producao) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.035s
+
+OK

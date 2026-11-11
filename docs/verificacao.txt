@@ -1,0 +1,9 @@
+/health: 200 OK
+/ordens: 200 OK
+/regras: 200 OK
+/ordens/21579001/balanco: 200 OK
+/ordens/21579001/simulacao: 200 OK
+/ordens/99999999/balanco: 404 OK
+/ordens/OP001/balanco: 422 OK
+/ordens/21579008/balanco: 422 OK
+Simulação HTTP: SOLUCAO_COMPLETA; sem Docker e sem LLM nesta verificação.

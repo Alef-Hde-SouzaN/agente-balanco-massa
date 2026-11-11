@@ -1,0 +1,28 @@
+services:
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      BM_DB: /data/balanco.sqlite3
+      BM_COMPETENCIA: "2026-11"
+    volumes:
+      - bm_data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.6.34
+    profiles: [chat]
+    ports:
+      - "127.0.0.1:3000:8080"
+    volumes:
+      - webui_data:/app/backend/data
+    depends_on:
+      api:
+        condition: service_healthy
+volumes:
+  bm_data:
+  webui_data:

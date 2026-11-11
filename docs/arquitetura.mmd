@@ -1,0 +1,7 @@
+flowchart TD
+ U["Usuário"] --> W["Open WebUI: conversa e tool calling"]
+ W <--> L["Modelo com ferramentas"]
+ W --> A["FastAPI: validação e contratos"]
+ A --> S["Serviço: Decimal e simulação"]
+ S --> B[("SQLite: ordens, materiais e movimentos")]
+ A --> H[("SQLite: auditoria")]
