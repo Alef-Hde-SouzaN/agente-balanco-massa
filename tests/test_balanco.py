@@ -41,6 +41,39 @@ class BalancoTests(unittest.TestCase):
         self.con.execute("UPDATE movimentos SET quantidade='48.5' WHERE ordem='21579003' AND tipo='261'")
         self.assertEqual(D(analisar(self.con,'21579003')['diferenca_percentual']),-10)
         self.assertEqual(analisar(self.con,'21579003')['classificacao'],'BALANCEADA')
+    def test_status_competencia_explicitos(self):
+        r=analisar(self.con,'21579005')
+        self.assertEqual(r['status_ordem'],'ENCERRADA')
+        self.assertEqual(r['competencia_ordem'],'2026-10')
+    def test_elegibilidade_explicita_consulta_e_simulacao(self):
+        r = analisar(self.con, '21579005', '2026-11')
+        self.assertFalse(r['elegivel_para_realocacao'])
+        self.assertFalse(r['necessita_reabertura'])
+        self.assertEqual(r['competencia_vigente'], '2026-11')
+        bloqueio = simular(self.con, '21579005', '2026-11')
+        self.assertEqual(bloqueio['motivo_bloqueio'], r['motivo_elegibilidade'])
+        self.assertFalse(bloqueio['dados_operacionais_alterados'])
+        self.assertEqual(bloqueio['movimentos'], [])
+
+    def test_aberta_anterior_e_encerrada_vigente(self):
+        self.con.execute("UPDATE ordens SET competencia='2026-10' WHERE numero='21579001'")
+        r = analisar(self.con, '21579001', '2026-11')
+        self.assertTrue(r['elegivel_para_realocacao'])
+        self.assertFalse(r['necessita_reabertura'])
+        r = analisar(self.con, '21579003', '2026-11')
+        self.assertTrue(r['elegivel_para_realocacao'])
+        self.assertTrue(r['necessita_reabertura'])
+
+    def test_percentuais_antes_e_depois_e_conservacao(self):
+        for codigo, esperado in [('21579001', {'21579001': 35, '21579002': -5, '21579004': 0}),
+                                 ('21579007', {'21579006': 0, '21579007': -35})]:
+            r = simular(self.con, codigo, '2026-11')
+            ordens = r['ordens_apos_simulacao']
+            self.assertEqual(sum(D(o['consumo_antes_kg']) for o in ordens),
+                             sum(D(o['consumo_kg']) for o in ordens))
+            for o in ordens:
+                self.assertEqual(D(o['diferenca_antes_percentual']), esperado[o['ordem']])
+
     def test_zero_producao(self):
         with self.assertRaises(RegraError): analisar(self.con,'21579008')
     def test_inexistente(self):

@@ -43,10 +43,10 @@ flowchart TD
 Contrato OpenAPI gerado em `/openapi.json`. IDs: listar_ordens, consultar_regras, consultar_balanco, simular_realocacao. Decisões do modelo: quais consultas executar e como comunicar resultados; regras de massa e elegibilidade pertencem ao serviço. Ferramentas aceitam apenas ordens locais de oito dígitos; sem SQL livre nem escrita operacional exposta. Sem autenticação corporativa; portas publicadas apenas no loopback para demonstração local.
 
 ## Testes, evals e evidências
-10 testes automatizados em tests/test_balanco.py: estornos, conversões, tolerância, realocação múltipla, material, elegibilidade, zero, inexistência, não mutação e seed idempotente. Resultado da execução local em docs/testes.txt. Testes HTTP exercitados separadamente e registrados em docs/verificacao.txt. Plano de evals e demonstração em [docs/demo.md](docs/demo.md). Auditoria em SQLite armazena respostas bem-sucedidas; erros HTTP aparecem no log do servidor, não na tabela. Falhas de modelo são avaliadas no chat.
+14 testes automatizados em tests/test_balanco.py: estornos, conversões, tolerância, realocação múltipla, material, elegibilidade, zero, inexistência, não mutação e seed idempotente. Resultado da execução local em docs/testes.txt. Testes HTTP exercitados separadamente e registrados em docs/verificacao.txt. Plano de evals e demonstração em [docs/demo.md](docs/demo.md). Auditoria em SQLite armazena respostas bem-sucedidas; erros HTTP aparecem no log do servidor, não na tabela. Falhas de modelo são avaliadas no chat.
 
 ## Limitações
-Heurística gulosa, não otimizador global. Ordens doadoras/receptoras candidatas terminam balanceadas; alvo pode permanecer parcial. Toda a base é validada ao carregar; registro inválido pode interromper análise de outra ordem. Sem histórico temporal completo de apontamentos/cancelamento de documento específico. Sem execução de reabertura ou estorno. Limites do LLM descritos em prompt não substituem limites programáticos. Não foi executado Docker neste ambiente de geração; validar build e chat no computador Linux. Sem vídeo final gravado nem evals com LLM executadas.
+Heurística gulosa, não otimizador global. Ordens doadoras/receptoras candidatas terminam balanceadas; alvo pode permanecer parcial. Toda a base é validada ao carregar; registro inválido pode interromper análise de outra ordem. Sem histórico temporal completo de apontamentos/cancelamento de documento específico. Sem execução de reabertura ou estorno. Limites do LLM descritos em prompt não substituem limites programáticos. Não foi executado Docker neste ambiente de geração; validar build e chat no computador Linux. Sem vídeo final gravado. Avaliações manuais relatadas em docs/evals_observadas.md; retestes finais e falhas adicionais pendentes.
 
 ## Encerrar e persistência
 ```bash
@@ -61,3 +61,7 @@ Pasta organizada e histórico Git local incluído no pacote. Publicar em um repo
 https://fastapi.tiangolo.com/deployment/docker/
 https://docs.openwebui.com/features/extensibility/plugin/tools/openapi-servers/open-webui/
 https://docs.openwebui.com/getting-started/quick-start/
+
+## Perfil exportado e resultados manuais
+Perfil sem dados pessoais em `config/analista-balanco-massa.json`. Importação em `docs/importar_perfil.md`. Observações, falhas e correções das avaliações manuais em `docs/evals_observadas.md`. Correção incluída: status e competência explícitos na consulta de balanço.
+A execução Docker da API foi comprovada pelo usuário (healthy e dez testes aprovados na versão anterior). O teste adicional de metadados foi executado localmente nesta revisão; o build atualizado e a importação do JSON devem ser verificados no Linux. Open WebUI e Groq configurados manualmente pelo usuário; a chave e os volumes pessoais não acompanham o pacote.

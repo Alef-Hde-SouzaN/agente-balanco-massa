@@ -3,3 +3,8 @@ __pycache__/
 .env
 *.sqlite3-wal
 *.sqlite3-shm
+
+# Diagnóstico local
+compose.debug.yaml
+diagnostico_webui.txt
+erro_ferramentas.txt

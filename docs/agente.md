@@ -3,7 +3,7 @@
 2. Abra http://localhost:3000 e crie sua conta local.
 3. Configure um provedor/modelo com suporte a chamadas nativas de ferramentas nas conexões. O projeto não inclui chave, assinatura ou modelo. Um modelo remoto exige credencial e pode ter custo; um local exige serviço/modelo e recursos próprios.
 4. Adicione um servidor de ferramentas OpenAPI na conexão global do servidor: `http://api:8000`, esquema `/openapi.json`. Se usar conexão executada pelo navegador, use `http://localhost:8000`; essa modalidade pode exigir CORS, portanto prefira a conexão global servidor a servidor.
-5. Habilite as ferramentas na conversa e selecione modo Native/Tool Calling.
+5. Habilite as ferramentas na conversa e selecione Function Calling Padrão e configure o modelo auxiliar externo como GPT OSS 20B (ver docs/importar_perfil.md).
 6. Cole as instruções abaixo no modelo/agente. Nomes de menus dependem da versão.
 
 ## Instruções do agente
